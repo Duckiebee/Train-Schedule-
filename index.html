@@ -12,17 +12,32 @@
 
 	<!-- Moment.js Reference -->
 	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+		
+
+	<style type="text/css">
+		
+		.jumbotron{
+color: #000000;
+background-color:limegreen !important;
+}
+
+.panel-heading{
+background-color: #4169E1 !important;
+color: #ffffff !important; 
+	}
+	</style>
+
 </head>
 <body>
 	<div class="container">
-		<div class="jumbotron display-3 text-center"">
+		<div class="jumbotron display-3 text-center bg-success text-white">
 			<h1 class="display-3">Train Schedule</h1>
-			<p class="lead">All Aboard!</p>
+			<p class="lead">All aboard!</p>
 		</div>
 
 		<!-- Current Train Form -->
 		<div class="panel panel-default">
-			<div class="panel-heading">Current Train Schedule  </div>
+			<div class="panel-heading"><b>Current Train Schedule </b> </div>
 			<div class="panel-body">   
 				<table class="table">
 					<thead>
@@ -46,31 +61,32 @@
 
 	<!-- Add Train Form -->
 	<div class="panel panel-default">
-		<div class="panel-heading">Panel Heading</div>
+		<div class="panel-heading"><b>Add Train</b></div>
 		<div class="panel-body">
 			<form>
 				<div class="form-group ">
-					<label class="form-control-label" for="formGroupExampleInput"> Train Name  </label>
-					<input type="text" class="form-control" id="formGroupExampleInput"  >
+					<label class="form-control-label" for="trainName"> Train Name  </label>
+					<input type="text" class="form-control" id="trainName"  >
 				</div>
 				<div class="form-group">
-					<label class="form-control-label" for="formGroupExampleInput2"> Destination </label>
-					<input type="text" class="form-control" id="formGroupExampleInput2" >
+					<label class="form-control-label" for="destination"> Destination </label>
+					<input type="text" class="form-control" id="destination" >
 				</div>
 				<div class="form-group">
-					<label class="form-control-label" for="formGroupExampleInput2"> First Train Time (HH:mm - military time) </label>
-					<input type="text" class="form-control" id="formGroupExampleInput2" >
+					<label class="form-control-label" for="trainTime"> First Train Time (HH:mm - military time) </label>
+					<input type="text" class="form-control" id="trainTime" >
 				</div>
 				<div class="form-group">
-					<label class="form-control-label" for="formGroupExampleInput2">Frequency (min)  </label>
-					<input type="text" class="form-control" id="formGroupExampleInput2" >
+					<label class="form-control-label" for="frequency">Frequency (min)  </label>
+					<input type="text" class="form-control" id="frequency" >
 				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" id="addTrain-btn" class="btn btn-primary">Submit</button>
 			</form>
 		</div>
 	</div>
 	<!--End Train Form -->
 </div>
-
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+<script type="text/javascript" src="Assets/train.js"></script>
 </body>
 </html>
