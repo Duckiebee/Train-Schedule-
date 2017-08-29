@@ -28,7 +28,7 @@ var newTrainInput = {
   destination: trainDestination,
   time: trainTime,
   frequency: trainFrequency
-};
+}
 
 //uploads the data to the database 
 database.ref().push(newTrainInput);
@@ -46,23 +46,40 @@ $("#destination").val("");
 $("#trainTime").val("");
 $("#frequency").val("");
 
-  });
+});
 
 //creates a Firebase event to add a new train schedule to the database and a new row to the html
-database.ref().on("child_added", function(data, prevChildKey) {
-  console.log(data.val());
-
-//stores data into a variable
-var newTrainName = data.val().name;
-var newTrainDestination = data.val().destination;
-var newTrainTime = data.val().time;
-var newTrainFrequency = data.val().frequency;
-
-console.log(newTrainName);
-console.log(newTrainDestination);
-console.log(newTrainTime);
-console.log(newTrainFrequency);
+database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
 
+var newTrainInfo = childSnapshot.val();
+console.log(newTrainInfo);
 
-})
+//create firebase variables for data 
+var firebaseName = newTrainInfo.name;
+var firebaseDestination = newTrainInfo.destination;
+var firebaseTime = newTrainInfo.time;
+var firebaseFrequency = newTrainInfo.frequency;
+
+var diffTime = moment().diff(moment.unix(firebaseTime), "minutes");
+    var timeRemainder = moment().diff(moment.unix(firebaseTime), "minutes") % firebaseFrequency;
+    var minutes = firebaseFrequency - timeRemainder;
+
+    var nextTrainArrival = moment().add(minutes, "m").format("HH");
+
+// var nextTrainArrival = moment(firebaseTime).fromNow().format("HH");
+
+
+
+//correct time and info check for debugging issues
+    console.log(minutes);
+    console.log(nextTrainArrival);
+    console.log(moment().format("HH"));
+    console.log(moment().format("X"));
+
+
+//appends the new train info to the train schedule
+    $("#trainScheduleTable").append("<tr><td>" + firebaseName + "</td><td>" + firebaseDestination + "</td><td>" + firebaseFrequency + "</td><td>" + nextTrainArrival + "</td><td>" + minutes + "</td></tr>");
+
+//
+});
