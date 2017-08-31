@@ -22,7 +22,7 @@ var trainDestination = $("#destination").val().trim();
 var trainTime = $("#trainTime").val().trim();
 var trainFrequency = $("#frequency").val().trim();
 
-
+//Creating new train info object
 var newTrainInput = {
   name: trainName,
   destination: trainDestination,
@@ -51,7 +51,7 @@ $("#frequency").val("");
 //creates a Firebase event to add a new train schedule to the database and a new row to the html
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
-
+//Data from firebase
 var newTrainInfo = childSnapshot.val();
 console.log(newTrainInfo);
 
@@ -61,25 +61,17 @@ var firebaseDestination = newTrainInfo.destination;
 var firebaseTime = newTrainInfo.time;
 var firebaseFrequency = newTrainInfo.frequency;
 
-var diffTime = moment().diff(moment.unix(firebaseTime), "minutes");
-    var timeRemainder = moment().diff(moment.unix(firebaseTime), "minutes") % firebaseFrequency;
-    var minutes = firebaseFrequency - timeRemainder;
+//Time calculations
+var diffBetweenCurrentAndTrainTime = moment().diff(moment(firebaseTime, "hh:mm"), "minutes");
+var remainder = diffBetweenCurrentAndTrainTime % firebaseFrequency;
+var timeAway = firebaseFrequency - remainder;
+var nextTrainArrival = moment().add(timeAway, "minutes");
+var formattedNextTrainArrival = moment(nextTrainArrival).format("hh:mm");
 
-    var nextTrainArrival = moment().add(minutes, "m").format("HH");
-
-// var nextTrainArrival = moment(firebaseTime).fromNow().format("HH");
-
-
-
-//correct time and info check for debugging issues
-    console.log(minutes);
+//Log times for debugging
+    console.log(timeAway);
     console.log(nextTrainArrival);
-    console.log(moment().format("HH"));
-    console.log(moment().format("X"));
 
-
-//appends the new train info to the train schedule
-    $("#trainScheduleTable").append("<tr><td>" + firebaseName + "</td><td>" + firebaseDestination + "</td><td>" + firebaseFrequency + "</td><td>" + nextTrainArrival + "</td><td>" + minutes + "</td></tr>");
-
-//
+//Appends the new train info to the train schedule
+    $("#trainScheduleTable").append("<tr><td>" + firebaseName + "</td><td>" + firebaseDestination + "</td><td>" + firebaseFrequency + "</td><td>" + formattedNextTrainArrival + "</td><td>" + timeAway + "</td></tr>");
 });
