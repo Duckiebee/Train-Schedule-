@@ -62,11 +62,11 @@ var firebaseTime = newTrainInfo.time;
 var firebaseFrequency = newTrainInfo.frequency;
 
 //Time calculations
-var diffBetweenCurrentAndTrainTime = moment().diff(moment(firebaseTime, "hh:mm"), "minutes");
+var diffBetweenCurrentAndTrainTime = moment().diff(moment(firebaseTime, "hh:mm A"), "minutes");
 var remainder = diffBetweenCurrentAndTrainTime % firebaseFrequency;
 var timeAway = firebaseFrequency - remainder;
 var nextTrainArrival = moment().add(timeAway, "minutes");
-var formattedNextTrainArrival = moment(nextTrainArrival).format("hh:mm");
+var formattedNextTrainArrival = moment(nextTrainArrival).format("hh:mm A");
 
 //Log times for debugging
     console.log(timeAway);
